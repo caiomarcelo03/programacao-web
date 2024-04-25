@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarefa JavaScript</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col text-center">
+      <h1>Tarefa JavaScript</h1>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <button class="btn btn-primary btn-block" onclick="exibirOperacoes()">Exibir Operações 10 e 100</button>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <div class="resultado" id="resultado"></div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <button class="btn btn-warning btn-block" onclick="exibirLoop()">Exibir Loop de 10 a 100</button>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <div class="resultado" id="loopResultado"></div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <button class="btn btn-info btn-block" onclick="exibirTabuadaFixa()">Exibir Tabuada Fixa de 5</button>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <div class="resultado" id="tabuadaFixa"></div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <input type="number" id="numero" class="form-control" placeholder="Digite um número">
+    </div>
+    <div class="col">
+      <button class="btn btn-success btn-block" onclick="calcularTabuada()">Calcular Tabuada</button>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <div class="resultado" id="tabuada"></div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <input type="number" id="valor1" class="form-control" placeholder="Digite o primeiro valor">
+    </div>
+    <div class="col">
+      <select id="operacao" class="form-control">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+    </div>
+    <div class="col">
+      <input type="number" id="valor2" class="form-control" placeholder="Digite o segundo valor">
+    </div>
+    <div class="col">
+      <button class="btn btn-info btn-block" onclick="calcularOperacao()">Calcular</button>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <div class="resultado" id="resultadoOperacao"></div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <input type="number" id="custoFabrica" class="form-control" placeholder="Custo de fábrica">
+    </div>
+    <div class="col">
+      <input type="number" id="percDistribuidor" class="form-control" placeholder="% Distribuidor">
+    </div>
+    <div class="col">
+      <input type="number" id="percImpostos" class="form-control" placeholder="% Impostos">
+    </div>
+    <div class="col">
+      <input type="number" id="valorfinal" class="form-control" placeholder="Valor Final" disabled>
+    </div>
+    <div class="col">
+      <button class="btn btn-warning btn-block" onclick="calcularCusto()">Calcular Custo Final</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function exibirOperacoes() {
+    var num1 = 10;
+    var num2 = 100;
+    var resultado = "Soma: " + (num1 + num2) + "\n" +
+                    "Subtração: " + (num2 - num1) + "\n" +
+                    "Divisão: " + (num2 / num1) + "\n" +
+                    "Multiplicação: " + (num1 * num2);
+
+    alert(resultado);
+  }
+
+  function exibirLoop() {
+    var loopResultado = "";
+    for (var i = 10; i <= 100; i++) {
+      loopResultado += i + " ";
+    }
+    document.getElementById("loopResultado").innerHTML = loopResultado;
+  }
+
+  function exibirTabuadaFixa() {
+    var numeroFixo = 5;
+    var tabuadaFixa = "";
+    for (var k = 1; k <= 10; k++) {
+      tabuadaFixa += numeroFixo + " x " + k + " = " + (numeroFixo * k) + "<br>";
+    }
+    document.getElementById("tabuadaFixa").innerHTML = tabuadaFixa;
+  }
+  function calcularTabuada() {
+    var numero = parseInt(document.getElementById("numero").value);
+    var tabuada = "";
+    for (var k = 1; k <= 10; k++) {
+      tabuada += numero + " x " + k + " = " + (numero * k) + "<br>";
+    }
+    document.getElementById("tabuada").innerHTML = tabuada;
+  }
+  function calcularOperacao() {
+    var valor1 = parseFloat(document.getElementById("valor1").value);
+    var valor2 = parseFloat(document.getElementById("valor2").value);
+    var operacao = document.getElementById("operacao").value;
+    var resultado;
+    switch (operacao) {
+      case "+":
+        resultado = valor1 + valor2;
+        break;
+      case "-":
+        resultado = valor1 - valor2;
+        break;
+      case "*":
+        resultado = valor1 * valor2;
+        break;
+      case "/":
+        if (valor2 !== 0) {
+          resultado = valor1 / valor2;
+        } else {
+          resultado = "Divisão por zero!";
+        }
+        break;
+      default:
+        resultado = "Operação inválida!";
+    }
+    document.getElementById("resultadoOperacao").innerHTML = resultado;
+  }
+  function calcularCusto() {
+    var custoFabrica = parseFloat(document.getElementById("custoFabrica").value);
+    var percDistribuidor = parseFloat(document.getElementById("percDistribuidor").value);
+    var percImpostos = parseFloat(document.getElementById("percImpostos").value);
+    var valorFinal = custoFabrica + (custoFabrica * percDistribuidor / 100) + (custoFabrica * percImpostos / 100);
+    document.getElementById("valorfinal").value = valorFinal.toFixed(2);
+  }
+</script>
+</body>
+</html>
