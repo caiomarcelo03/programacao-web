@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro de Pessoas</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+    button {
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    #table-container {
+        margin-top: 20px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+</style>
+</head>
+<body>
+
+<div>
+    <label for="name">Nome:</label>
+    <input type="text" id="name">
+    <label for="email">Email:</label>
+    <input type="text" id="email">
+    <label for="phone">Telefone:</label>
+    <input type="text" id="phone">
+    <button onclick="salvarPessoa()">Salvar</button>
+    <button onclick="sincronizar()">Sincronizar</button>
+</div>
+
+<div id="table-container">
+    <table id="people-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- As linhas da tabela serão preenchidas dinamicamente -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+let pessoas = [];
+
+function salvarPessoa() {
+    const nome = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const telefone = document.getElementById('phone').value;
+
+    const pessoa = {
+        nome: nome,
+        email: email,
+        telefone: telefone
+    };
+
+    pessoas.push(pessoa);
+    atualizarTabela();
+}
+
+function sincronizar() {
+    fetch('https://663d57fde1913c476793f8d2.mockapi.io/Teste', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pessoas)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Pessoas sincronizadas com sucesso:', data);
+    })
+    .catch(error => console.error('Erro ao sincronizar pessoas:', error));
+}
+
+function atualizarTabela() {
+    const tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = '';
+
+    pessoas.forEach(pessoa => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${pessoa.nome}</td>
+            <td>${pessoa.email}</td>
+            <td>${pessoa.telefone}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+</script>
+
+</body>
+</html>
